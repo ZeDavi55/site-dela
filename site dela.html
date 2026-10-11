@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Minha Namorada ❤️</title>
+    <style>
+        /* Estilos base e fundo animado */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+            margin: 0; 
+            color: #333; 
+            overflow: hidden; /* Esconde os corações que saem da tela */
+            position: relative;
+        }
+        
+        .player-container { 
+            background: rgba(255, 255, 255, 0.95); 
+            padding: 25px; 
+            border-radius: 25px; 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15); 
+            width: 90%; 
+            max-width: 400px; 
+            text-align: center; 
+            z-index: 10; /* Fica acima dos corações */
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        h2 { margin: 0 0 10px; font-size: 1.8em; color: #ff4757; }
+
+        /* Seção do Potinho */
+        .jar-section { 
+            background: #fff0f3; 
+            padding: 25px 20px; 
+            border-radius: 20px; 
+            border: 2px dashed #ffb8b8; 
+            position: relative;
+        }
+        
+        .jar-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .jar-btn { 
+            background: linear-gradient(135deg, #ff0844 0%, #ffb199 100%);
+            background-size: 200% auto;
+            border: none; 
+            color: white; 
+            padding: 16px 25px; 
+            border-radius: 40px; 
+            cursor: pointer; 
+            font-weight: 800; 
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Efeito bounce/elástico */
+            width: 100%; 
+            box-shadow: 0 8px 20px rgba(255, 8, 68, 0.4); /* Brilho em volta */
+            outline: none;
+        }
+        
+        .jar-btn:hover { 
+            background-position: right center; /* Move o gradiente */
+            transform: translateY(-6px) scale(1.02); /* Flutua e aumenta um pouco */
+            box-shadow: 0 15px 25px rgba(255, 8, 68, 0.6); /* Brilho fica mais forte */
+        }
+
+        .jar-btn:active {
+            transform: translateY(2px) scale(0.98); /* Afunda ao clicar */
+            box-shadow: 0 4px 10px rgba(255, 8, 68, 0.4);
+            transition: all 0.1s; /* Resposta rápida ao clique */
+        }
+        
+        .message-display { 
+            margin-top: 20px; 
+            font-style: italic; 
+            font-size: 1.1em;
+            color: #2f3542;
+            min-height: 80px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            transition: opacity 0.4s ease-in-out; 
+            opacity: 1; 
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        /* Efeito de corações flutuantes no fundo */
+        .heart {
+            position: absolute;
+            font-size: 20px;
+            color: rgba(255, 71, 87, 0.5);
+            animation: floatUp 8s linear infinite;
+            bottom: -20px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg) scale(1.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Container Principal -->
+    <div class="player-container">
+        
+        <h2>Nossa Playlist 🎶</h2>
+
+        <!-- Player Embutido do Spotify com a sua Playlist -->
+        <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5K7WAX52a1KdhHwck21UdS?utm_source=generator&theme=0" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+
+        <div class="jar-section">
+            <div class="jar-icon" id="jarIcon">🏺</div>
+            <button class="jar-btn" id="jarBtn">Tirar um motivo do potinho ✨</button>
+            <div class="message-display" id="message">Clique acima para ler um motivo pelo qual eu te amo!</div>
+        </div>
+    </div>
+
+    <script>
+        // --- LÓGICA DO POTINHO DE MOTIVOS ---
+        const messages = [
+            "O seu sorriso é a melhor parte do meu dia.",
+            "Amo o jeito que o seu nariz franze quando você ri.",
+            "Com você, qualquer lugar se torna o meu favorito.",
+            "Eu me apaixono por você todos os dias um pouquinho mais.",
+            "Adoro as nossas conversas e o nosso tempo juntos.",
+            "Você me faz querer ser uma pessoa melhor.",
+            "Seu abraço é o meu porto seguro.",
+            "Você é a minha notificação favorita.",
+            "Amo as nossas conversas de madrugada.",
+            "Você transforma qualquer dia comum em um evento especial.",
+            "Seu cheiro é o meu favorito no mundo inteiro.",
+            "Eu amo a sua voz.",
+            "Você tem o dom de me acalmar.",
+            "Até o seu lado irritadinho é fofo.",
+            "Nós formamos o melhor time.",
+            "Amo quando você me manda mensagens do nada.",
+            "Você é a minha melhor amiga.",
+            "Sua risada é a melhor melodia.",
+            "O seu beijo é viciante.",
+            "Amo o jeito que as nossas mãos se encaixam.",
+            "Com você, eu me sinto infinito.",
+            "Nós aceitamos o amor que achamos que merecemos, e eu tenho certeza que mereço você.",
+            "Você é a música perfeita para tocar enquanto passamos por um túnel.",
+            "Você me faz sentir que estou exatamente onde deveria estar.",
+            "Estar com você me faz querer participar mais da vida.",
+            "Mesmo nos dias ruins, você me faz lembrar que as coisas ficam bem.",
+            "Você enxerga o melhor em mim, até quando eu mesmo não vejo.",
+            "Você é a única pessoa com quem eu dividiria meu fone para ouvir 'Let Down'.",
+            "Com você do meu lado, eu nunca me sinto um 'Let Down'.",
+            "Você é a minha melodia favorita no mundo.",
+            "Ouvir música com você é o meu momento de paz.",
+            "A nossa sintonia é melhor do que qualquer álbum do Radiohead.",
+            "Você acalma o barulho do mundo ao meu redor.",
+            "Se o nosso amor fosse uma música, eu deixaria no repeat para sempre.",
+            "Você é o CSS que dá cor e estilo à minha vida.",
+            "Você me faz mais feliz que fechar um código JavaScript sem nenhum erro no console.",
+            "Se o meu coração fosse um repositório no GitHub, você teria todos os commits.",
+            "Você é a tag <head> da minha vida, porque tudo começa com você.",
+            "Nossa conexão não tem delay.",
+            "Mesmo que eu programasse o algoritmo mais complexo, nunca explicaria o quanto te amo.",
+            "Você é o script que faz tudo funcionar direito no meu dia.",
+            "Nossa história é o melhor projeto que eu já construí.",
+            "Nossa conexão tem zero resistência.",
+            "Você ilumina meus dias mais do que qualquer LED em tensão máxima.",
+            "Meu coração acelera por você como um motor em alta rotação.",
+            "Você liga meus circuitos melhor que qualquer ponte retificadora.",
+            "Nem as leis de Kirchhoff conseguem calcular o tamanho do meu amor por você.",
+            "Você é a energia principal que alimenta a minha vida.",
+            "Quando estou com você, parece que tudo está perfeitamente aterrado e seguro.",
+            "Nosso relacionamento flui melhor que o Tiki-Taka do Ajax.",
+            "Você me faz mais feliz do que ganhar a Champions League no Football Manager.",
+            "Meu coração bate mais forte por você do que em uma final de campeonato.",
+            "Você é a minha heroína favorita, melhor que qualquer história do Batman.",
+            "Você tem o controle de todos os meus sentimentos.",
+            "Se a gente fosse um deck de cartas, nosso combo seria invencível.",
+            "Até o Ben 10 ficaria com inveja das transformações boas que você fez na minha vida.",
+            "Você é mais linda que o pôr do sol em Natal.",
+            "Até o trânsito da cidade fica bom se você estiver no banco do lado.",
+            "Passear com você é sempre o meu rolê favorito.",
+            "Eu passaria mil vidas procurando por você.",
+            "Você desperta o melhor em mim.",
+            "O universo caprichou quando fez você.",
+            "Você tem um coração de ouro.",
+            "Eu amo a sua companhia para qualquer coisa.",
+            "Seus conselhos são os melhores.",
+            "Amo acordar sabendo que tenho você.",
+            "O nosso 'para sempre' ainda é pouco tempo.",
+            "Eu amo quando você canta junto com a música.",
+            "Você é mais incrível a cada dia que passa.",
+            "Nós somos perfeitos um para o outro.",
+            "Sua energia é contagiante.",
+            "Você é o meu pensamento antes de dormir e ao acordar.",
+            "Você é o meu amor verdadeiro.",
+            "Você cuida de mim como ninguém.",
+            "Sua presença ilumina qualquer ambiente.",
+            "Eu simplesmente amo você, por ser exatamente quem é.",
+            "Amo planejar nosso futuro juntos.",
+            "O seu abraço me reinicia.",
+            "Você faz os meus problemas parecerem menores.",
+            "Você entende as minhas piadas sem graça.",
+            "Você é o meu presente mais valioso.",
+            "Adoro o jeito que você presta atenção aos detalhes.",
+            "Você me dá forças quando eu não tenho nenhuma.",
+            "Estar com você é a melhor aventura da minha vida.",
+            "Eu me orgulho da mulher que você é.",
+            "Nós dividimos a melhor parceria de todas.",
+            "Amo a paciência que você tem comigo.",
+            "Com você, até ficar em silêncio é confortável.",
+            "Você me faz dar as risadas mais sinceras.",
+            "Você é a minha paz no meio do caos.",
+            "Seu carinho cura qualquer dia ruim.",
+            "Eu amo fazer planos com você.",
+            "Você deixa tudo mais leve.",
+            "Você é o motivo dos meus sorrisos bobos para a tela do celular.",
+            "Amo como você me desafia a ser melhor.",
+            "Você é absolutamente inesquecível.",
+            "Eu amo a gente."
+        ];
+
+        const jarBtn = document.getElementById('jarBtn');
+        const messageDisplay = document.getElementById('message');
+        const jarIcon = document.getElementById('jarIcon');
+
+        jarBtn.addEventListener('click', () => {
+            // Animação de fade out no texto e tremor no potinho
+            messageDisplay.style.opacity = 0;
+            jarIcon.style.transform = "rotate(-15deg) scale(1.1)";
+            
+            setTimeout(() => {
+                jarIcon.style.transform = "rotate(15deg) scale(1.1)";
+            }, 150);
+
+            setTimeout(() => {
+                jarIcon.style.transform = "rotate(0) scale(1)";
+                // Sorteia uma frase aleatória
+                let randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                
+                // Atualiza o texto e faz o fade in
+                messageDisplay.textContent = '"' + randomMessage + '"';
+                messageDisplay.style.opacity = 1;
+            }, 300); 
+        });
+
+        // --- LÓGICA DOS CORAÇÕES FLUTUANTES NO FUNDO ---
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            
+            // Posição horizontal aleatória
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Tamanho aleatório
+            heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            
+            // Duração da animação aleatória (velocidade)
+            heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            
+            document.body.appendChild(heart);
+            
+            // Remove o coração depois que ele sai da tela (8 segundos)
+            setTimeout(() => {
+                heart.remove();
+            }, 8000);
+        }
+
+        // Cria um novo coração a cada 500 milissegundos
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
